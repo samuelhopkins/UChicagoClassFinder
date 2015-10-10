@@ -2,12 +2,12 @@ extends layout
 
 block content
 
-  form(name="query-classes", method="post", action='/')
+  form#formID(name="queryClasses", method="post", action='/', class="test")
     div(class="left-half")
         div(class="days")
             each day in ['M','T','W','R','F']
                 label= day
-                    input(type="checkbox", name="days", value=day)
+                    input(type="checkbox", name="days",  value=day)
         div(class="times")
             div Start Time
                 select(name="startHours")
@@ -34,13 +34,10 @@ block content
         select(class="departments", name="departments", multiple="true")
             for department in departments
                 option(value=department.department name=department.department)= department.department
-    div(class="submit")
-        input(type="submit", value="search")
 
-    div(class="divide")
+  div(class="divide")
   
-  div(class="classes")
-    if found_classes
-        ul
-            each row in found_classes
-                li= row.name + ' ' + row.number + ' ' +row.times
+  div(class="class-block")
+    ul(class="classes")
+
+
