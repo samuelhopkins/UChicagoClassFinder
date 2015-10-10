@@ -1,5 +1,24 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+
+  form(name="query-classes", method="post", action='/')
+    div(class="left-half")
+        div(class="days")
+            each day in ['M','T','W','TR','F']
+                label= day
+                    input(type="checkbox", name=day, value=day)
+        div(class="times")
+            label Start Time
+                input(type="text", value="10:30am", name="end-time" )
+            br
+            label End Time
+                input(type="text", value="1:30pm", name="end-time")
+    div(class="right-half")
+        select(class="departments", name="departments", multiple="true")
+            for department in departments
+                option(value=department.department name=department.department)= department.department
+    div(class="submit")
+        input(type="submit", value="search")
+
+    div(class="divide")
