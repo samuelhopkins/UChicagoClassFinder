@@ -5,15 +5,31 @@ block content
   form(name="query-classes", method="post", action='/')
     div(class="left-half")
         div(class="days")
-            each day in ['M','T','W','TR','F']
+            each day in ['M','T','W','R','F']
                 label= day
-                    input(type="checkbox", name=day, value=day)
+                    input(type="checkbox", name="days", value=day)
         div(class="times")
-            label Start Time
-                input(type="text", value="10:30am", name="end-time" )
-            br
-            label End Time
-                input(type="text", value="1:30pm", name="end-time")
+            div Start Time
+                select(name="startHours")
+                    for hour in ['01','02','03','04','05','06','07','08','09','10','11','12']
+                        option(value=hour)= hour
+                select(name="startMinutes")
+                    for minute in minutes
+                        option(value=minute)= minute
+                select(name="startPost")
+                    for post in ['am','pm']
+                        option(value=post)= post
+            div End Time
+                select(name="endHours")
+                    for hour in ['01','02','03','04','05','06','07','08','09','10','11','12']
+                        option(value=hour)= hour
+                select(name="endMinutes")
+                    for minute in minutes
+                        option(value=minute)= minute
+                select(name="endPost")
+                    for post in ['am','pm']
+                        option(value=post)= post
+
     div(class="right-half")
         select(class="departments", name="departments", multiple="true")
             for department in departments
@@ -22,3 +38,9 @@ block content
         input(type="submit", value="search")
 
     div(class="divide")
+  
+  div(class="classes")
+    if found_classes
+        ul
+            each row in found_classes
+                li= row.name + ' ' + row.number + ' ' +row.times
