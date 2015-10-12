@@ -76,6 +76,8 @@ app.get('connection').connect(function(err){
     console.log('Error connecting to db');
     return;
   }
+  var populate = app.get('populate');
+  populate();
   console.log('Connection established');
 });
 
@@ -103,19 +105,21 @@ app.use(function(err, req, res, next) {
   });
 });
 
+app.set('populate',function(){
+var fs = require('fs');
+var content = fs.readFileSync("classes.json");
+var jsonContent = JSON.parse(content);
+sql = 'TRUNCATE table class';
+app.get('connection').query(sql);
+for (var obj in jsonContent){
+  object = jsonContent[obj];
+  var sql = 'INSERT INTO class SET ?';
+  values = {department : object.department, name : object.name, days: JSON.stringify(object.days), times : object.hours,
+    start24 : object.start24, end24: object.end24, instructor : object.instructor, number : object.number};
+    app.get('connection').query(sql,values);
+  }
+});
 
-// var fs = require('fs');
-// var content = fs.readFileSync("classes.json");
-// var jsonContent = JSON.parse(content);
-// sql = 'TRUNCATE table class';
-// app.get('connection').query(sql);
-// for (var obj in jsonContent){
-//     object = jsonContent[obj];
-//     var sql = 'INSERT INTO class SET ?';
-//     values = {department : object.department, name : object.name, days: JSON.stringify(object.days), times : object.hours,
-//     start24 : object.start24, end24: object.end24, instructor : object.instructor, number : object.number};
-//     app.get('connection').query(sql,values);
-// }
 
 
 module.exports = app;
