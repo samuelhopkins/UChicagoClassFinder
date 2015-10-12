@@ -48,12 +48,13 @@ for (var obj in jsonContent){
 
 console.log("start termination");
 return;
-// client.end(function(err, res){
-//     console.log("terminating");
-//     if (err) throw err;
-//     if (!err){
-//         console.log("Connection terminated successfully");
-//     }
-// });
+
 });
 
+client.end(function(err, res){
+    console.log("terminating");
+    if (err) throw err;
+    if (!err){
+        console.log("Connection terminated successfully");
+    }
+});
