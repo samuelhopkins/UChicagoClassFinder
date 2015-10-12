@@ -44,7 +44,9 @@ for (var obj in jsonContent){
     start24 : object.start24, end24: object.end24, instructor : object.instructor, number : object.number};
     client.query(sql,values);
 }
+
 client.end(function(err, res){
+    console.log("terminating");
     if (err) throw err;
     if (!err){
         console.log("Connection terminated successfully");
