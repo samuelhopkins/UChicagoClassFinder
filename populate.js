@@ -47,6 +47,7 @@ for (var obj in jsonContent){
 }
 
 console.log("start termination");
+return;
 // client.end(function(err, res){
 //     console.log("terminating");
 //     if (err) throw err;
