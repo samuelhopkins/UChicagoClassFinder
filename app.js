@@ -38,7 +38,6 @@ var environ = app.get('env');
 console.log(environ);
 switch (environ) {
   case 'development':
-    console.log('dev');
     app.set('connection', mysql.createConnection({
       port: 3307,
       host     : 'localhost',
@@ -105,18 +104,18 @@ app.use(function(err, req, res, next) {
 });
 
 
-var fs = require('fs');
-var content = fs.readFileSync("classes.json");
-var jsonContent = JSON.parse(content);
-sql = 'TRUNCATE table class';
-app.get('connection').query(sql);
-for (var obj in jsonContent){
-    object = jsonContent[obj];
-    var sql = 'INSERT INTO class SET ?';
-    values = {department : object.department, name : object.name, days: JSON.stringify(object.days), times : object.hours,
-    start24 : object.start24, end24: object.end24, instructor : object.instructor, number : object.number};
-    app.get('connection').query(sql,values);
-}
+// var fs = require('fs');
+// var content = fs.readFileSync("classes.json");
+// var jsonContent = JSON.parse(content);
+// sql = 'TRUNCATE table class';
+// app.get('connection').query(sql);
+// for (var obj in jsonContent){
+//     object = jsonContent[obj];
+//     var sql = 'INSERT INTO class SET ?';
+//     values = {department : object.department, name : object.name, days: JSON.stringify(object.days), times : object.hours,
+//     start24 : object.start24, end24: object.end24, instructor : object.instructor, number : object.number};
+//     app.get('connection').query(sql,values);
+// }
 
 
 module.exports = app;
