@@ -54,7 +54,7 @@ switch (app.get('env')) {
     }));
   break;
   case 'production':
-    app.set('connection', mysql.createConnection(process.env.DATABASE_URL));
+    app.set('connection', mysql.createConnection(app.get('DATABASE_URL')));
 
     app.use( function (req, res, next) {
         if((!req.secure) && (req.get('X-Forwarded-Proto') !== 'https')) {
@@ -102,10 +102,19 @@ app.use(function(err, req, res, next) {
   });
 });
 
-app.post('/test-page', function(req, res) {
-    var name = req.body.name,
-        color = req.body.color;
-    // ...
-});
+
+var fs = require('fs');
+var content = fs.readFileSync("classes.json");
+var jsonContent = JSON.parse(content);
+sql = 'TRUNCATE table class';
+app.get('connection').query(sql);
+for (var obj in jsonContent){
+    object = jsonContent[obj];
+    var sql = 'INSERT INTO class SET ?';
+    values = {department : object.department, name : object.name, days: JSON.stringify(object.days), times : object.hours,
+    start24 : object.start24, end24: object.end24, instructor : object.instructor, number : object.number};
+    app.get('connection').query(sql,values);
+}
+
 
 module.exports = app;
