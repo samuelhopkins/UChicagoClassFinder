@@ -37,6 +37,7 @@ var content = fs.readFileSync("classes.json");
 var jsonContent = JSON.parse(content);
 sql = 'TRUNCATE table class';
 client.query(sql);
+console.log('table truncated');
 for (var obj in jsonContent){
     object = jsonContent[obj];
     var sql = 'INSERT INTO class SET ?';
