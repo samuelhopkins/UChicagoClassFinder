@@ -1,10 +1,9 @@
 var fs = require('fs');
 var mysql = require('mysql');
-
-
+var app = require('./app.js');
 var client;
 
-switch (process.env.ENV) {
+switch (app.get('env')) {
   case 'development':
     console.log('dev');
     client = mysql.createConnection({

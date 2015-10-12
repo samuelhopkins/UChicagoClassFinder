@@ -4,8 +4,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var cheerio = require('cheerio');
-var request = require('request');
 var mysql = require('mysql');
 
 var routes = require('./routes/index');
@@ -36,7 +34,7 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-switch (process.env.ENV) {
+switch (app.get('env')) {
   case 'development':
     console.log('dev');
     app.set('connection', mysql.createConnection({
