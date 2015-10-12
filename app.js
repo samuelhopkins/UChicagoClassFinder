@@ -34,7 +34,7 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-switch (app.get('env')) {
+switch (process.env.ENV) {
   case 'development':
     console.log('dev');
     app.set('connection', mysql.createConnection({
@@ -54,7 +54,7 @@ switch (app.get('env')) {
     }));
   break;
   case 'production':
-    app.set('connection', mysql.createConnection(app.get('DATABASE_URL')));
+    app.set('connection', mysql.createConnection(process.env.DATABASE_URL));
 
     app.use( function (req, res, next) {
         if((!req.secure) && (req.get('X-Forwarded-Proto') !== 'https')) {
