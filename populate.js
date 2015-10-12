@@ -44,6 +44,7 @@ for (var obj in jsonContent){
     values = {department : object.department, name : object.name, days: JSON.stringify(object.days), times : object.hours,
     start24 : object.start24, end24: object.end24, instructor : object.instructor, number : object.number};
     client.query(sql,values);
+    console.log(obj);
 }
 
 client.end(function(err, res){
