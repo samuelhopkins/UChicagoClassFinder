@@ -34,7 +34,9 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-switch (process.env.ENV) {
+var environ = app.get('env');
+console.log(environ);
+switch (environ) {
   case 'development':
     console.log('dev');
     app.set('connection', mysql.createConnection({
