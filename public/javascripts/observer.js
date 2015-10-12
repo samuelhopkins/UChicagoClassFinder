@@ -25,7 +25,12 @@ $form.addEventListener('change', function(change){
         data = JSON.parse(data);
         for(var d in data){
           var row =  data[d];
-          var insert = '</li><p> ' + row.name +' '+ row.number +' '+row.days+' '+row.times+'<p></li>';
+          days_array = JSON.parse(row.days);
+          var days = '';
+          for (var day in days_array){
+            days += ' '+days_array[day]+' ';
+          }
+          var insert = '</li><p> ' + row.name +' - '+ row.number +' - '+days+' - '+row.times+'<p></li>';
           $("ul.classes").append(insert);
         }
       });

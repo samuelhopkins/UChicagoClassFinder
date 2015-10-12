@@ -36,14 +36,41 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-
-app.set('connection', mysql.createConnection({
+switch (process.env.ENV) {
+  case 'development':
+    console.log('dev');
+    app.set('connection', mysql.createConnection({
       port: 3307,
       host     : 'localhost',
       user     : 'root',
       password : 'blank',
       database : 'classes'
     }));
+  break;
+  case 'stage':
+    app.set('connection', mysql.createConnection({
+      host     : 'promodb-stage.cygnvapjclbd.us-west-2.rds.amazonaws.com',
+      user     : 'stagedb',
+      password : 'timDB$!34',
+      database : 'promodb'
+    }));
+  break;
+  case 'production':
+    app.set('connection', mysql.createConnection(process.env.DATABASE_URL));
+
+    app.use( function (req, res, next) {
+        if((!req.secure) && (req.get('X-Forwarded-Proto') !== 'https')) {
+            res.writeHead(301, {
+              Location: 'https://' + req.get('Host') + req.url
+            });
+        res.end();
+        }
+        else
+            next();
+    });
+  break;
+}
+
 
 app.get('connection').connect(function(err){
   if(err){

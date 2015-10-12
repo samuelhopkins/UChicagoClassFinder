@@ -2,15 +2,31 @@ var fs = require('fs');
 var mysql = require('mysql');
 
 
+var client;
 
-
-var client = mysql.createConnection({
-    port: 3307,
-    host     : 'localhost',
-    user     : 'root',
-    password : 'blank',
-    database : 'classes'
-});
+switch (process.env.ENV) {
+  case 'development':
+    console.log('dev');
+    client = mysql.createConnection({
+      port: 3307,
+      host     : 'localhost',
+      user     : 'root',
+      password : 'blank',
+      database : 'classes'
+    });
+  break;
+  case 'stage':
+    client = mysql.createConnection({
+      host     : 'promodb-stage.cygnvapjclbd.us-west-2.rds.amazonaws.com',
+      user     : 'stagedb',
+      password : 'timDB$!34',
+      database : 'promodb'
+    });
+  break;
+  case 'production':
+    client =  mysql.createConnection(process.env.DATABASE_URL);
+  break;
+}
 
 client.connect(function(err){
   if(err){
