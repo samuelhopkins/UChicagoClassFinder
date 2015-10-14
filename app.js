@@ -35,7 +35,7 @@ app.use(function(req, res, next) {
 });
 
 var environ = app.get('env');
-var get_connection = function(){
+function get_connection (){
 switch (environ) {
   case 'development':
     app.set('connection', mysql.createConnection({
@@ -70,24 +70,41 @@ switch (environ) {
   break;
 }
 
-};
+}
+
 get_connection();
 
-app.get('connection').connect(function(err){
-  if(err){
-    if (err.code == 'PROTOCOL_CONNECTION_LOST'){
-      var con = new get_connection();
+function connect(){
+  app.get('connection').connect(function(err){
+    if(err){
+      if (err.code == 'PROTOCOL_CONNECTION_LOST'){
+      }
+      console.log('Error connecting to db');
+      return;
     }
-    console.log('Error connecting to db');
-    return;
-  }
-  var populate = app.get('populate');
-  populate();
-  console.log('Connection established');
-});
-
+    var populate = app.get('populate');
+    populate();
+    console.log('Connection established');
+  });
+}
+connect();
 // error handlers
+var conn = app.get('connection');
 
+function handleDisconnect(conn) {
+  conn.on('error', function (error) {
+    if (!error.fatal) return;
+    if (error.code !== 'PROTOCOL_CONNECTION_LOST') throw err;
+
+    console.error('> Re-connecting lost MySQL connection: ' + error.stack);
+
+    // NOTE: This assignment is to a variable from an outer scope; this is extremely important
+    // If this said `client =` it wouldn't do what you want. The assignment here is implicitly changed
+    // to `global.mysqlClient =` in node.
+    get_connection();
+    connect();
+  });
+}
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
