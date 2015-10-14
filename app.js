@@ -70,13 +70,14 @@ switch (environ) {
   break;
 }
 
+};
+
 
 app.get('connection').connect(function(err){
   if(err){
     if (err.code == 'PROTOCOL_CONNECTION_LOST'){
       var con = new get_connection();
     }
-
     console.log('Error connecting to db');
     return;
   }
@@ -84,8 +85,6 @@ app.get('connection').connect(function(err){
   populate();
   console.log('Connection established');
 });
-
-};
 
 // error handlers
 
