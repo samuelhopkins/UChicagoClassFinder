@@ -35,7 +35,7 @@ app.use(function(req, res, next) {
 });
 
 var environ = app.get('env');
-console.log(environ);
+var get_connection = function(){
 switch (environ) {
   case 'development':
     app.set('connection', mysql.createConnection({
@@ -73,6 +73,10 @@ switch (environ) {
 
 app.get('connection').connect(function(err){
   if(err){
+    if (err.code == 'PROTOCOL_CONNECTION_LOST'){
+      var con = new get_connection();
+    }
+
     console.log('Error connecting to db');
     return;
   }
@@ -80,6 +84,8 @@ app.get('connection').connect(function(err){
   populate();
   console.log('Connection established');
 });
+
+};
 
 // error handlers
 
