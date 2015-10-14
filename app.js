@@ -71,7 +71,7 @@ switch (environ) {
 }
 
 };
-
+get_connection();
 
 app.get('connection').connect(function(err){
   if(err){
