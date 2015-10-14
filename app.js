@@ -71,8 +71,12 @@ switch (environ) {
 }
 
 }
-
-get_connection();
+setTimeout(function () {
+   get_connection();
+    connection = app.get('connection');
+    handleDisconnect(connection);
+    connect();
+}, 1000);
 
 function connect(){
   app.get('connection').connect(function(err){
@@ -87,9 +91,8 @@ function connect(){
     console.log('Connection established');
   });
 }
-connect();
+
 // error handlers
-var conn = app.get('connection');
 
 function handleDisconnect(conn) {
   conn.on('error', function (error) {
