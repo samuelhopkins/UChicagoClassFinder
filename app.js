@@ -38,7 +38,7 @@ var environ = app.get('env');
 var connection;
 
 function get_connection (){
-switch (environ) {
+switch (app.get('env')) {
   case 'development':
     connection =  mysql.createConnection({
       port: 3307,
@@ -71,8 +71,9 @@ function handleDisconnect(myConnection) {
     if (!error.fatal) return;
     if (error.code !== 'PROTOCOL_CONNECTION_LOST') throw err;
     console.error('> Re-connecting lost MySQL connection: ' + error.stack);
-    myConnection.destroy();
+    myConnection.end();
     get_connection();
+    sleep(1000);
     handleDisconnect(connection);
     connection.connect();
 });
