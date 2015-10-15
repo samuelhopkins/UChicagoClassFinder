@@ -72,11 +72,7 @@ switch (environ) {
 }
 
 }
-setTimeout(function () {
-    get_connection();
-    handleDisconnect();
-    connect();
-}, 1000);
+
 
 function connect(){
   app.get('connection').connect(function(err){
@@ -104,8 +100,11 @@ function handleDisconnect() {
     // NOTE: This assignment is to a variable from an outer scope; this is extremely important
     // If this said `client =` it wouldn't do what you want. The assignment here is implicitly changed
     // to `global.mysqlClient =` in node.
+    setTimeout(function () {
     get_connection();
+    handleDisconnect();
     connect();
+  }, 1000);
   });
 }
 // development error handler
@@ -145,6 +144,6 @@ for (var obj in jsonContent){
   }
 });
 
-
+handleDisconnect();
 
 module.exports = app;
