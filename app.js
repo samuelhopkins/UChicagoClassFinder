@@ -72,11 +72,11 @@ function handleDisconnect(myConnection) {
     if (!error.fatal) return;
     if (error.code !== 'PROTOCOL_CONNECTION_LOST') throw err;
     console.error('> Re-connecting lost MySQL connection: ' + error.stack);
-    myConnection.end();
+   setTimeout(function(){
     get_connection();
-    sleep(1000);
     handleDisconnect(connection);
     connection.connect();
+  }, 1000);
 });
 }
 
