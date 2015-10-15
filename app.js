@@ -35,78 +35,50 @@ app.use(function(req, res, next) {
 });
 
 var environ = app.get('env');
-var connection;
+
 function get_connection (){
 switch (environ) {
   case 'development':
-    app.set('connection', mysql.createConnection({
+    return mysql.createConnection({
       port: 3307,
       host     : 'localhost',
       user     : 'root',
       password : 'blank',
       database : 'classes'
-    }));
+    });
   break;
   case 'stage':
-    app.set('connection', mysql.createConnection({
+  return mysql.createConnection({
       host     : 'promodb-stage.cygnvapjclbd.us-west-2.rds.amazonaws.com',
       user     : 'stagedb',
       password : 'timDB$!34',
       database : 'promodb'
-    }));
-  break;
-  case 'production':
-    app.set('connection', mysql.createConnection(process.env.DATABASE_URL));
-
-    app.use( function (req, res, next) {
-        if((!req.secure) && (req.get('X-Forwarded-Proto') !== 'https')) {
-            res.writeHead(301, {
-              Location: 'https://' + req.get('Host') + req.url
-            });
-        res.end();
-        }
-        else
-            next();
     });
   break;
+  case 'production':
+   return mysql.createConnection(process.env.DATABASE_URL);
+   break;
 }
 
 }
 
-
-function connect(){
-  app.get('connection').connect(function(err){
-    if(err){
-      if (err.code == 'PROTOCOL_CONNECTION_LOST'){
-      }
-      console.log('Error connecting to db');
-      return;
-    }
-    var populate = app.get('populate');
-    populate();
-    console.log('Connection established');
-  });
-}
+var connection = get_connection();
 
 // error handlers
 
-function handleDisconnect() {
-  app.get('connection').on('error', function (error) {
+function handleDisconnect(myConnection) {
+  myConnection.on('error', function (error) {
     if (!error.fatal) return;
     if (error.code !== 'PROTOCOL_CONNECTION_LOST') throw err;
-
     console.error('> Re-connecting lost MySQL connection: ' + error.stack);
-
-    // NOTE: This assignment is to a variable from an outer scope; this is extremely important
-    // If this said `client =` it wouldn't do what you want. The assignment here is implicitly changed
-    // to `global.mysqlClient =` in node.
-    setTimeout(function () {
-    get_connection();
-    handleDisconnect();
-    connect();
-  }, 1000);
-  });
+    myConnection.destroy();
+    connection = get_connection;
+    handleDisconnect(connection);
+    connection.connect();
+});
 }
+
+handleDisconnect(connection);
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
@@ -144,6 +116,5 @@ for (var obj in jsonContent){
   }
 });
 
-handleDisconnect();
 
 module.exports = app;
