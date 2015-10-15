@@ -112,7 +112,7 @@ for (var obj in jsonContent){
   var sql = 'INSERT INTO class SET ?';
   values = {department : object.department, name : object.name, days: JSON.stringify(object.days), times : object.hours,
     start24 : object.start24, end24: object.end24, instructor : object.instructor, number : object.number};
-    app.get('connection').query(sql,values);
+    connection.query(sql,values);
   }
 });
 
