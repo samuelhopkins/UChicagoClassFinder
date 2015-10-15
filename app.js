@@ -63,7 +63,7 @@ switch (environ) {
 }
 
 var connection = get_connection();
-
+connection.connect();
 // error handlers
 
 function handleDisconnect(myConnection) {
