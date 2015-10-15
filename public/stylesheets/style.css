@@ -1,5 +1,6 @@
 body {
   padding: 50px;
+  background-color: #8D1519;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -11,14 +12,69 @@ select.departments{
     height: 200px;
 }
 
+div.search-top{
+  color:#B1A8A8;
+}
+
+label{
+  margin-left: 15px;
+}
+
+
+#formID{
+  background-color: rgba(0,0,0,0);
+}
+
+div.endTime{
+  padding-left: 3px;
+}
+select[name=endHours],
+select[name=endMinutes],
+select[name=endPost],
+select[name=startHours],
+select[name=startMinutes],
+select[name=startHours]{
+  margin-left: 8px;
+}
+
 .left-half{
+  text-align: center;
     float:left;
-    width: 50%;
+    width: 30%;
+}
+
+li.class-li{
+  background-color: #B94859;
+  margin: 0 auto;
+}
+
+div.multi{
+  text-align: left;
+}
+
+div.class-block{
+ 
+}
+div.results{
+  margin-top: 30px;
+  width: 72%;
+  float:left;
+  margin-left: 15%;
 }
 
 .right-half{
+  text-align: center;
     float:left;
-    width:50%;
+    width:70%;
+}
+
+li.res{
+  color:#B1A8A8;
+  padding-left: 8px;
+  padding-top: 2px;
+  list-style: none;
+  margin: 0 auto;
+  border: 2px solid black;
 }
 
 .divide{

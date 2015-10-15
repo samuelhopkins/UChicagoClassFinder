@@ -1,43 +1,47 @@
 extends layout
 
 block content
+    div(class="search-top")
+      form(id="formID" name="queryClasses", method="post", action='/', class="test")
+        div(class="left-half")
+            div(class="days")
+                h4 Select the days you are available for class
+                each day in ['M','T','W','R','F']
+                    label(class="day")= day
+                        input(class="check" type="checkbox", name="days",  value=day)
+            div(class="times")
+                h4 Select the earliest and latest time you are available for class
+                div Start Time
+                    select(name="startHours")
+                        for hour in ['01','02','03','04','05','06','07','08','09','10','11','12']
+                            option(value=hour)= hour
+                    select(name="startMinutes")
+                        for minute in minutes
+                            option(value=minute)= minute
+                    select(name="startPost")
+                        for post in ['am','pm']
+                            option(value=post)= post
+                div(class="endTime") End Time  
+                    select(name="endHours")
+                        for hour in ['01','02','03','04','05','06','07','08','09','10','11','12']
+                            option(value=hour)= hour
+                    select(name="endMinutes")
+                        for minute in minutes
+                            option(value=minute)= minute
+                    select(name="endPost")
+                        for post in ['pm','am']
+                            option(value=post)= post
 
-  form#formID(name="queryClasses", method="post", action='/', class="test")
-    div(class="left-half")
-        div(class="days")
-            each day in ['M','T','W','R','F']
-                label= day
-                    input(type="checkbox", name="days",  value=day)
-        div(class="times")
-            div Start Time
-                select(name="startHours")
-                    for hour in ['01','02','03','04','05','06','07','08','09','10','11','12']
-                        option(value=hour)= hour
-                select(name="startMinutes")
-                    for minute in minutes
-                        option(value=minute)= minute
-                select(name="startPost")
-                    for post in ['am','pm']
-                        option(value=post)= post
-            div End Time
-                select(name="endHours")
-                    for hour in ['01','02','03','04','05','06','07','08','09','10','11','12']
-                        option(value=hour)= hour
-                select(name="endMinutes")
-                    for minute in minutes
-                        option(value=minute)= minute
-                select(name="endPost")
-                    for post in ['am','pm']
-                        option(value=post)= post
+        div(class="right-half")
+            h4(class="select") Select multiple departments to filter classes
+            div(class="multi")
+                select(multiple="multiple" id="multi-select" name="departments")
+                    for department in departments
+                        option(value=department.department name=department.department)= department.department
 
-    div(class="right-half")
-        select(class="departments", name="departments", multiple="true")
-            for department in departments
-                option(value=department.department name=department.department)= department.department
-
-  div(class="divide")
   
-  div(class="class-block")
-    ul(class="classes")
-
+    .class-block
+      .results
+          ul.classes-list
+    <script>$('#my-select').multiSelect()</script>
 

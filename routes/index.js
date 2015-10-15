@@ -35,6 +35,7 @@ router.get('/up', function(req, res){
     console.log(req.query);
     sql = 'SELECT * from class WHERE department ="';
     departments = req.query.departments;
+    console.log(departments);
     if(Array.isArray(departments)){
     sql = sql + departments.join('" OR department = "') + '"';
     }else{
@@ -46,9 +47,11 @@ router.get('/up', function(req, res){
     var start_time = get24(req.query.startHours,req.query.startMinutes,req.query.startPost);
     var end_time = get24(req.query.endHours, req.query.endMinutes, req.query.endPost);
     found_classes = [];
+    console.log(sql);
     req.app.get('connection').query(sql, function(err, rows){
 
     for(var i in rows){
+        console.log(rows[i]);
         var row = rows[i];
         if ((Number(row.start24) >= start_time) && (Number(row.end24) <= end_time)){
            var days = JSON.parse(row.days);
