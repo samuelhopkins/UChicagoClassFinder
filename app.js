@@ -35,6 +35,7 @@ app.use(function(req, res, next) {
 });
 
 var environ = app.get('env');
+var connection;
 function get_connection (){
 switch (environ) {
   case 'development':
@@ -72,9 +73,8 @@ switch (environ) {
 
 }
 setTimeout(function () {
-   get_connection();
-    connection = app.get('connection');
-    handleDisconnect(connection);
+    get_connection();
+    handleDisconnect();
     connect();
 }, 1000);
 
@@ -94,8 +94,8 @@ function connect(){
 
 // error handlers
 
-function handleDisconnect(conn) {
-  conn.on('error', function (error) {
+function handleDisconnect() {
+  app.get('connection').on('error', function (error) {
     if (!error.fatal) return;
     if (error.code !== 'PROTOCOL_CONNECTION_LOST') throw err;
 
