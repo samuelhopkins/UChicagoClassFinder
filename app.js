@@ -35,11 +35,12 @@ app.use(function(req, res, next) {
 });
 
 var environ = app.get('env');
+var connection;
 
 function get_connection (){
 switch (environ) {
   case 'development':
-    return mysql.createConnection({
+    connection =  mysql.createConnection({
       port: 3307,
       host     : 'localhost',
       user     : 'root',
@@ -48,7 +49,7 @@ switch (environ) {
     });
   break;
   case 'stage':
-  return mysql.createConnection({
+  connection = mysql.createConnection({
       host     : 'promodb-stage.cygnvapjclbd.us-west-2.rds.amazonaws.com',
       user     : 'stagedb',
       password : 'timDB$!34',
@@ -56,13 +57,12 @@ switch (environ) {
     });
   break;
   case 'production':
-   return mysql.createConnection(process.env.DATABASE_URL);
+   connection = mysql.createConnection(process.env.DATABASE_URL);
    break;
+  }
 }
 
-}
-
-var connection = get_connection();
+get_connection();
 connection.connect();
 // error handlers
 
@@ -72,7 +72,7 @@ function handleDisconnect(myConnection) {
     if (error.code !== 'PROTOCOL_CONNECTION_LOST') throw err;
     console.error('> Re-connecting lost MySQL connection: ' + error.stack);
     myConnection.destroy();
-    connection = get_connection;
+    get_connection();
     handleDisconnect(connection);
     connection.connect();
 });
