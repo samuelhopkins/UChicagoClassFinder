@@ -106,7 +106,7 @@ var fs = require('fs');
 var content = fs.readFileSync("classes.json");
 var jsonContent = JSON.parse(content);
 sql = 'TRUNCATE table class';
-app.get('connection').query(sql);
+connection.query(sql);
 for (var obj in jsonContent){
   object = jsonContent[obj];
   var sql = 'INSERT INTO class SET ?';
