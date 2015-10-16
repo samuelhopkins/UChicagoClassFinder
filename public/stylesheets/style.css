@@ -1,7 +1,14 @@
 body {
-  padding: 50px;
-  background-color: #8D1519;
+   padding: 50px;
+  background-color: #880E09;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+h1,h2,h3,h4,h5{
+  font-family: 'Lato', sans-serif;
+}
+a,p,li, div
+{
+  font-family: 'Lato', sans-serif, thin;
 }
 
 a {
@@ -13,7 +20,7 @@ select.departments{
 }
 
 div.search-top{
-  color:#B1A8A8;
+  color: #D2CEDA;
 }
 
 label{
@@ -38,6 +45,7 @@ select[name=startHours]{
 }
 
 .left-half{
+  padding-top: 30px;
   text-align: center;
     float:left;
     width: 30%;
@@ -50,6 +58,9 @@ li.class-li{
 
 div.multi{
   text-align: left;
+}
+h4.days-title{
+  color: #FBEBEF;
 }
 
 div.class-block{
@@ -69,12 +80,15 @@ div.results{
 }
 
 li.res{
-  color:#B1A8A8;
+  background-color: white;
+  color: #615C5C;
   padding-left: 8px;
   padding-top: 2px;
   list-style: none;
   margin: 0 auto;
-  border: 2px solid black;
+  border: 2px solid #ADB9AC;
+  border-radius: 4px;
+  margin-top: 5px;
 }
 
 .divide{
