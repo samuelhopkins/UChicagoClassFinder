@@ -54,7 +54,7 @@ $('#multi-select').multiSelect({
           for (var day in days_array){
             days += ' '+days_array[day]+' ';
           }
-          var insert = '<li class="res"><p>' + row.name +' - '+ row.number +' - '+days+' - '+row.times+'</p><p> Instructor: '+row.instructor +'</p></li>';
+          var insert = '<li class="res"><p>' + row.name +' - '+ row.number +'    |       Days: '+days+'      |      Times: '+row.times+'</p><p> Instructor: '+row.instructor +'</p><a href='+row.link+' target="_blank">Course Details</a></li>';
           $("ul.classes-list").append(insert);
         }
       });
@@ -71,7 +71,7 @@ $('#multi-select').multiSelect({
           for (var day in days_array){
             days += ' '+days_array[day]+' ';
           }
-          var insert = '<li class="res"><p>' + row.name +' - '+ row.number +' - '+days+' - '+row.times+'</p><p> Instructor: '+row.instructor +'</p></li>';
+          var insert = '<li class="res"><p>' + row.name +' - '+ row.number +'    |       Days: '+days+'      |      Times: '+row.times+'</p><p> Instructor: '+row.instructor +'</p><a href='+row.link+' target="_blank">Course Details</a></li>';
           $("ul.classes-list").append(insert);
         }
       });
