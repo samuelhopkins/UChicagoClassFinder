@@ -1,17 +1,16 @@
 extends layout
 
 block content
-    div(class="search-top")
-      form(id="formID" name="queryClasses", method="post", action='/', class="test")
+    form(id="formID" name="queryClasses", method="post", action='/', class="test")
         div(class="left-half")
             div(class="days")
                 h4(class="days-title") Select the days you are available for class
                 each day in ['M','T','W','R','F']
                     label(class="day")= day
-                        input(class="check" type="checkbox", name="days",  value=day)
+                    input(class="check" type="checkbox", name="days",  value=day)
             div(class="times")
                 h4(class="days-title") Select the earliest and latest time you are available for class
-                div Start Time
+                div(class="time") Start Time
                     select(name="startHours")
                         for hour in ['01','02','03','04','05','06','07','08','09','10','11','12']
                             option(value=hour)= hour
@@ -21,7 +20,7 @@ block content
                     select(name="startPost")
                         for post in ['am','pm']
                             option(value=post)= post
-                div(class="endTime") End Time  
+                div(class="endTime time") End Time  
                     select(name="endHours")
                         for hour in ['01','02','03','04','05','06','07','08','09','10','11','12']
                             option(value=hour)= hour

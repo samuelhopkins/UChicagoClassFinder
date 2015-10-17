@@ -17,11 +17,8 @@ var State = function(){
               departments: $("select[name='departments']").val() };
             };
 
-
-
-var $form = $( "form" ).get(0);
-$form.addEventListener('change', function(change){
-   var $state = new State();
+function doQuery(){
+ var $state = new State();
     $("ul.classes-list").empty();
    $.get("/up", $state.state, function(data){
         data = JSON.parse(data);
@@ -36,45 +33,22 @@ $form.addEventListener('change', function(change){
           $("ul.classes-list").append(insert);
         }
       });
+}
+
+
+var $form = $( "form" ).get(0);
+$form.addEventListener('change', function(change){
+   doQuery();
 }, false);
 
 
 
 $('#multi-select').multiSelect({
   afterSelect: function(values){
-     var $state = new State();
-     $("ul.classes-list").empty();
-   $.get("/up", $state.state, function(data){
-        data = JSON.parse(data);
-        console.log(data);
-        for(var d in data){
-          var row =  data[d];
-          days_array = JSON.parse(row.days);
-          var days = '';
-          for (var day in days_array){
-            days += ' '+days_array[day]+' ';
-          }
-          var insert = '<li class="res"><p>' + row.name +' - '+ row.number +'    |       Days: '+days+'      |      Times: '+row.times+'</p><p> Instructor: '+row.instructor +'</p><a href='+row.link+' target="_blank">Course Details</a></li>';
-          $("ul.classes-list").append(insert);
-        }
-      });
+     doQuery();
   },
   afterDeselect: function(values){
-     var $state = new State();
-     $("ul.classes-list").empty();
-   $.get("/up", $state.state, function(data){
-        data = JSON.parse(data);
-        for(var d in data){
-          var row =  data[d];
-          days_array = JSON.parse(row.days);
-          var days = '';
-          for (var day in days_array){
-            days += ' '+days_array[day]+' ';
-          }
-          var insert = '<li class="res"><p>' + row.name +' - '+ row.number +'    |       Days: '+days+'      |      Times: '+row.times+'</p><p> Instructor: '+row.instructor +'</p><a href='+row.link+' target="_blank">Course Details</a></li>';
-          $("ul.classes-list").append(insert);
-        }
-      });
+     doQuery();
   }
 });
 });

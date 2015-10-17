@@ -20,7 +20,9 @@ select.departments{
 }
 
 div.search-top{
-  color: #D2CEDA;
+  background-color: #D2CEDA;
+  width:100%;
+  height:100%;
 }
 
 label{
@@ -63,8 +65,13 @@ h4.days-title{
   color: #FBEBEF;
 }
 
-div.class-block{
- 
+label{
+  color:#CCC8D4;
+  margin-right: 5px;
+}
+
+div.time{
+  color:#CCC8D4;
 }
 div.results{
   margin-top: 30px;
