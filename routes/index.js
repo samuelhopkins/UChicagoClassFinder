@@ -15,7 +15,7 @@ for (var min in minutesNums){
 router.get('/', function(req, res) {
     req.app.get('connection').query('SELECT DISTINCT(department) AS department from class ORDER BY department', function (err, departments) {
         found_classes = null;
-  res.render('index', { title: 'Express', departments:departments, found_classes:found_classes, minutes:minutes });
+  res.render('index', {departments:departments, found_classes:found_classes, minutes:minutes });
 });
 });
 

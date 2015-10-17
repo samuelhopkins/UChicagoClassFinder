@@ -61,10 +61,15 @@ switch (app.get('env')) {
    break;
   }
   app.set('connection', connection);
+
 }
 
 get_connection();
-connection.connect();
+connection.connect(function(err){
+  if (!err){
+    app.get('populate')();
+  }
+});
 // error handlers
 
 function handleDisconnect(myConnection) {
@@ -108,13 +113,13 @@ var fs = require('fs');
 var content = fs.readFileSync("classes.json");
 var jsonContent = JSON.parse(content);
 sql = 'TRUNCATE table class';
-connection.query(sql);
+app.get('connection').query(sql);
 for (var obj in jsonContent){
   object = jsonContent[obj];
   var sql = 'INSERT INTO class SET ?';
   values = {department : object.department, name : object.name, days: JSON.stringify(object.days), times : object.hours,
-    start24 : object.start24, end24: object.end24, instructor : object.instructor, number : object.number};
-    connection.query(sql,values);
+    start24 : object.start24, end24: object.end24, instructor : object.instructor, number : object.number, link : object.link};
+    app.get('connection').query(sql,values);
   }
 });
 

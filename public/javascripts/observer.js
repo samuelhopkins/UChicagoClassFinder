@@ -22,7 +22,7 @@ var State = function(){
 var $form = $( "form" ).get(0);
 $form.addEventListener('change', function(change){
    var $state = new State();
-   $("ul.classes-list").empty();
+    $("ul.classes-list").empty();
    $.get("/up", $state.state, function(data){
         data = JSON.parse(data);
         for(var d in data){
@@ -32,7 +32,7 @@ $form.addEventListener('change', function(change){
           for (var day in days_array){
             days += ' '+days_array[day]+' ';
           }
-          var insert = '<li class="res"><p>' + row.name +' - '+ row.number +'    |       Days: '+days+'      |      Times: '+row.times+'</p><p> Instructor: '+row.instructor +'</p></li>';
+          var insert = '<li class="res"><p>' + row.name +' - '+ row.number +'    |       Days: '+days+'      |      Times: '+row.times+'</p><p> Instructor: '+row.instructor +'</p><a href='+row.link+' target="_blank">Course Details</a></li>';
           $("ul.classes-list").append(insert);
         }
       });
