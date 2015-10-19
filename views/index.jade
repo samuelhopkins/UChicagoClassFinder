@@ -37,6 +37,34 @@ block content
                 select(multiple="multiple" id="multi-select" name="departments")
                     for department in departments
                         option(value=department.department name=department.department)= department.department
+    div(class="focus")
+    div(class="schedule-button")
+        span(id="show-schedule") Show current schedule
+    div(class="schedule")
+        span(id="close-schedule") close
+        span(id='clear-schedule') clear
+        div(class="time-labels")
+            ul(class="time-names")
+                li 9:00-10:30am
+                li 10:30am-12:00pm
+                li 12:00pm-1:30pm
+                li 1:30pm-3:00pm
+                li 3:00pm-4:30pm
+                li 4:30pm-5:00pm
+                li 5:00pm-6:30pm
+                li 6:30pm-8:00pm
+        div(class="fill-column")
+        div(class="day-column" id="monday")
+            p Monday
+        div(class="day-column" id="tuesday")
+            p Tuesday
+        div(class="day-column wed" id="wednesday")
+            p Wednesday
+        div(class="day-column" id="thursday")
+            p Thursday
+        div(class="day-column friday" id="friday")
+            p Friday
+            
 
   
     .class-block
