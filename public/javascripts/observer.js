@@ -17,6 +17,8 @@ var State = function(){
               departments: $("select[name='departments']").val() };
             };
 
+var Schedule = {'M':[],'T':[],'W':[],'R':[],'F':[]};
+
 function doQuery(){
  var $state = new State();
     $("ul.classes-list").empty();
@@ -61,6 +63,7 @@ $('#clear-schedule').click(function(){
   var day_table={'M':'monday', 'T':'tuesday','W':'wednesday','R':'thursday','F':'friday'};
   $.each(day_table, function(key,val){
     $('#'+val +' > div.block-class').remove();
+    Schedule[key] = [];
   });
 });
 
@@ -82,6 +85,10 @@ $("span.add").on('click',function(){
 
 function addToSchedule(time,name,days,start24,end24){
   var day_table={'M':'monday', 'T':'tuesday','W':'wednesday','R':'thursday','F':'friday'};
+  if (checkScheduleSpace(start24,end24,days) === false){
+    alert("Time slot " + days.toString()+' '+'from '+time+' already filled');
+    return;
+  }
   var timeDiff = end24 - start24;
   var startDiff = start24 - 900;
   var height = (timeDiff/1100) * 350;
@@ -94,6 +101,26 @@ function addToSchedule(time,name,days,start24,end24){
     removeBlock();
   });
   showSchedule();
+}
+
+function checkScheduleSpace(start24,end24,days){
+  var bool = true;
+  $.each(days, function(index, val){
+    var slots = Schedule[val];
+    console.log(slots);
+    $.each(slots, function(i,v){
+      var start = v[0];
+      var end = v[1];
+      console.log(start,start24);
+      console.log(end,end24);
+      if ((start24 >= start) && (end24 <= end)){
+        console.log("Break");
+        bool = false;
+      }
+    });
+   Schedule[val].push([start24,end24]);
+  });
+  return bool;
 }
 
 function removeBlock(){
