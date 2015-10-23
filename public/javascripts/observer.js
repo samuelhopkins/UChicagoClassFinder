@@ -17,6 +17,7 @@ var State = function(){
               departments: $("select[name='departments']").val() };
             };
 
+
 var Schedule = {'M':[],'T':[],'W':[],'R':[],'F':[]};
 
 function doQuery(){
@@ -95,7 +96,7 @@ function addToSchedule(time,name,days,start24,end24){
   var offest = ((startDiff/1100) * 350) + 60;
   $.each(days, function(index,val){
     var inner = '<p class="class-title">'+name+'</p><p class="block-class-time">'+time+'</p>';
-    var div = $("<div>").html(inner).css({'width':'120px', 'height': height.toString()+'px','position':'absolute', 'top':offest.toString()+'px', 'border': 'solid 1px black'});
+    var div = $('<div data-time="'+start24+'-'+end24+'">').html(inner).css({'width':'120px', 'height': height.toString()+'px','position':'absolute', 'top':offest.toString()+'px', 'border': 'solid 1px black'});
     div.addClass('block-class');
     $('#'+day_table[val]).append(div);
     removeBlock();
@@ -125,7 +126,28 @@ function checkScheduleSpace(start24,end24,days){
 
 function removeBlock(){
   $('.block-class').dblclick(function(event){
-    $(this).remove();
+    time = $(this).data('time');
+    $.each($('.day-column'), function(index,el){
+      $.each($(el).children('.block-class'), function(i,val){
+        if (time == $(val).data('time')){
+          $(val).remove();
+        }
+      });
+    });
+    startTime = Number(time.split('-')[0]);
+    var day_table={'M':'monday', 'T':'tuesday','W':'wednesday','R':'thursday','F':'friday'};
+    $.each(Schedule, function(key,val){
+      new_vals =[];
+      $.each(val, function(index, v){
+        console.log(v[0], startTime);
+          if (v[0] != startTime)
+          {
+            console.log('appending');
+            new_vals.append(v);
+          }
+  });
+      Schedule[key] = new_vals;
+  });
   });
 }
 
