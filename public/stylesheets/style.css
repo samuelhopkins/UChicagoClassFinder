@@ -124,7 +124,7 @@ div.focus{
 
 span#show-schedule{
   font-size: 1.5em;
-  color: rgba(221, 32, 32, 1);
+  color: rgba(255, 128, 128, 1);
   position:fixed;
   top:300px;
   left: 30px;
@@ -144,6 +144,7 @@ span#close-schedule{
 }
 
 span#clear-schedule{
+  border:solid 1px grey;
   color: #207FED;
   position: absolute;
   top: 450px;
@@ -160,6 +161,13 @@ p.class-title{
   max-height: 15px;
   overflow-y:hidden;
 }
+
+p.class-title:hover{
+  max-height: 40px;
+  overflow:auto;
+}
+
+
 
 div.days-table{
   width:100%;
@@ -213,6 +221,8 @@ div.friday{
 div.block-class{
   font-size: 11px;
 }
+
+
 
 p.block-class-time{
   margin-top: -10px;

@@ -71,7 +71,6 @@ $('#clear-schedule').click(function(){
 
 function addClick(){
 $("span.add").on('click',function(){
-  console.log("clicked");
   var time = $(this).data('times');
   var split = time.split("-");
   var name = $(this).attr('name');
@@ -112,10 +111,7 @@ function checkScheduleSpace(start24,end24,days){
     $.each(slots, function(i,v){
       var start = v[0];
       var end = v[1];
-      console.log(start,start24);
-      console.log(end,end24);
-      if ((start24 >= start) && (end24 <= end)){
-        console.log("Break");
+      if ((start24 >= start) && (start24 <= end)){
         bool = false;
       }
     });
@@ -126,6 +122,8 @@ function checkScheduleSpace(start24,end24,days){
 
 function removeBlock(){
   $('.block-class').dblclick(function(event){
+    console.log('before');
+    console.log(Schedule);
     time = $(this).data('time');
     $.each($('.day-column'), function(index,el){
       $.each($(el).children('.block-class'), function(i,val){
@@ -137,17 +135,17 @@ function removeBlock(){
     startTime = Number(time.split('-')[0]);
     var day_table={'M':'monday', 'T':'tuesday','W':'wednesday','R':'thursday','F':'friday'};
     $.each(Schedule, function(key,val){
-      new_vals =[];
+      new_vals = [];
       $.each(val, function(index, v){
-        console.log(v[0], startTime);
           if (v[0] != startTime)
           {
-            console.log('appending');
-            new_vals.append(v);
+            new_vals.push(v);
           }
   });
       Schedule[key] = new_vals;
   });
+    console.log('after');
+    console.log(Schedule);
   });
 }
 
