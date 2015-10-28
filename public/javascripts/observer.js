@@ -1,5 +1,14 @@
 $(window).load(function() {
 
+var offset = 70;
+for(var i =0; i < 8; i++){
+  var newOffset = offset + (i * 50);
+  var div = $('<div>').css({"top": newOffset.toString() + 'px'});
+  div.addClass('line');
+  $(".time-labels").append(div);
+}
+var classNum = 0;
+var colors = ["#CC0200","#486CCC","#CC5F16","#CCB304", "#51216E"];
 var State = function(){
   var checked = [];
   var boxes = $("input:checkbox[name='days']:checked");
@@ -32,7 +41,7 @@ function doQuery(){
           for (var day in days_array){
             days += ' '+days_array[day]+' ';
           }
-          var insert = '<li class="res"><p>' + row.name +' - '+ row.number +'    |       Days: '+days+'      |      Times: '+row.times+'</p><p> Instructor: '+row.instructor +'</p><a href='+row.link+' target="_blank">Course Details</a>' +
+          var insert = '<li class="res"><p>' + row.name +' - '+ row.number +'    |       Days: '+days+'      |      Times: '+row.times+'</p><p> Instructor: '+row.instructor +'</p><a class="details" href='+row.link+' target="_blank">Course Details</a>' +
           '<span class="add" data-days="'+days_array+'" data-times="'+row.times+'" name="'+row.name+'"> Add to schedule<span></li>';
           $("ul.classes-list").append(insert);
         }
@@ -66,6 +75,7 @@ $('#clear-schedule').click(function(){
     $('#'+val +' > div.block-class').remove();
     Schedule[key] = [];
   });
+  classNum = 0;
 });
 
 
@@ -85,49 +95,59 @@ $("span.add").on('click',function(){
 
 function addToSchedule(time,name,days,start24,end24){
   var day_table={'M':'monday', 'T':'tuesday','W':'wednesday','R':'thursday','F':'friday'};
-  if (checkScheduleSpace(start24,end24,days) === false){
-    alert("Time slot " + days.toString()+' '+'from '+time+' already filled');
+  if (classNum > 4){
+    alert("You cannot schedule more than 5 classes at once.");
     return;
   }
-  var timeDiff = end24 - start24;
-  var startDiff = start24 - 900;
-  var height = (timeDiff/1100) * 350;
-  var offest = ((startDiff/1100) * 350) + 60;
+  if (checkScheduleSpace(start24,end24,days) === false){
+    alert("Time slot " + time + ' on ' +days.toString() + ' is already filled');
+    return;
+  }
+  var startMins = (Math.floor(start24/100) * 60) + (start24 % 100);
+  var endMins = (Math.floor(end24/100) * 60) + (end24 % 100);
+  console.log(start24,startMins);
+  var timeDiff = endMins - startMins;
+  console.log(timeDiff);
+  var startDiff = startMins - 540;
+  var height = timeDiff * (5/9);
+  console.log(height);
+  var offset = (startDiff * (5/9)) + 70;
   $.each(days, function(index,val){
-    var inner = '<p class="class-title">'+name+'</p><p class="block-class-time">'+time+'</p>';
-    var div = $('<div data-time="'+start24+'-'+end24+'">').html(inner).css({'width':'120px', 'height': height.toString()+'px','position':'absolute', 'top':offest.toString()+'px', 'border': 'solid 1px black'});
+    var inner = '<div class="block-inner"><p class="class-title">'+name+'</p><p class="block-class-time">'+time+'</p></div>';
+    var div = $('<div data-time="'+start24+'-'+end24+'" data-name="'+name+'">').html(inner).css({'width':'120px', 'height': height.toString()+'px','position':'absolute', 'top':offset.toString()+'px', 'border': 'solid 1px #A09B9B', 'background-color': colors[classNum]});
     div.addClass('block-class');
     $('#'+day_table[val]).append(div);
-    removeBlock();
   });
+  removeBlock();
+  classNum += 1;
   showSchedule();
 }
 
 function checkScheduleSpace(start24,end24,days){
   var bool = true;
   $.each(days, function(index, val){
-    var slots = Schedule[val];
-    console.log(slots);
-    $.each(slots, function(i,v){
+    $.each(Schedule[val], function(i,v){
       var start = v[0];
       var end = v[1];
       if ((start24 >= start) && (start24 <= end)){
         bool = false;
       }
     });
+    if (bool){
    Schedule[val].push([start24,end24]);
+  }
   });
   return bool;
 }
 
 function removeBlock(){
   $('.block-class').dblclick(function(event){
-    console.log('before');
-    console.log(Schedule);
-    time = $(this).data('time');
+    var name = $(this).data('name');
+    var time = $(this).data('time');
+    console.log(name);
     $.each($('.day-column'), function(index,el){
       $.each($(el).children('.block-class'), function(i,val){
-        if (time == $(val).data('time')){
+        if (name == $(val).data('name')){
           $(val).remove();
         }
       });
@@ -144,8 +164,7 @@ function removeBlock(){
   });
       Schedule[key] = new_vals;
   });
-    console.log('after');
-    console.log(Schedule);
+    classNum -= 1;
   });
 }
 

@@ -11,6 +11,15 @@ a,p,li, div
   font-family: 'Lato', sans-serif, thin;
 }
 
+div.line{
+  z-index: -1000;
+  height:1px;
+  background-color: #D2D2D2;
+  width:660px;
+  position:absolute;
+  left:120px;
+}
+
 a {
   color: #00B7FF;
 }
@@ -46,6 +55,9 @@ select[name=startHours]{
   margin-left: 8px;
 }
 
+a.details{
+  color:#207FED;
+}
 .left-half{
   padding-top: 30px;
   text-align: center;
@@ -72,6 +84,7 @@ label{
 
 div.time{
   color:#CCC8D4;
+  font-size: 1.3em;
 }
 div.results{
   margin-top: 30px;
@@ -104,7 +117,7 @@ div.schedule{
   position: fixed;
   z-index: 1000;
   max-width: 900px;
-  height: 500px;
+  height: 455px;
   left:50%;
   top:10%;
   margin-left: -400px;
@@ -122,32 +135,36 @@ div.focus{
   height: 150vh;
 }
 
-span#show-schedule{
-  font-size: 1.5em;
-  color: rgba(255, 128, 128, 1);
+button#show-schedule{
+  border-radius: 5px;
+  font-size: 1.3em;
+  background-color:  #5E0302;
+  color:white;
   position:fixed;
   top:300px;
   left: 30px;
 }
 
-span#show-schedule:hover{
-  cursor: pointer;
-  text-decoration: underline;
+button#show-schedule:hover{
+  background-color: #E50502;
 }
 
-span#close-schedule{
+
+button#close-schedule{
   border:solid 1px grey;
   color:#207FED;
+  border-radius: 3px;
   position: absolute;
   top: 10px;
   left: 10px;
 }
 
-span#clear-schedule{
+button#clear-schedule{
   border:solid 1px grey;
   color: #207FED;
   position: absolute;
-  top: 450px;
+  border-radius: 3px;
+  top: 420px;
   left: 380px;
 }
 
@@ -190,14 +207,18 @@ div.time-labels{
   padding-top: 40px;
   float:left;
   margin-left: -30px;
-  height:500px;
+  height:auto;
   min-height: 350px;
-  max-height: 350px;
+}
+
+ul.time-names{
+  margin-top: -10px;
 }
 
 ul.time-names >li{
   margin-top: 30px;
   display:block;
+  height:20px;
 }
 
 div.fill-column{
@@ -206,11 +227,12 @@ div.fill-column{
   width:50px;
 }
 div.day-column{
+  margin-top: 0px;
   text-align: center;
   padding-top: 30px;
   float:left;
   height:70%;
-  height:350px;
+  height:450px;
   width:120px;
 }
 
@@ -219,10 +241,22 @@ div.friday{
 }
 
 div.block-class{
+  z-index: 1000;
   font-size: 11px;
+  border-radius: 3px;
+  color:white;
 }
 
+div.block-inner{
+  position: relative;
+  top: 50%;
+  transform: translateY(-55%);
+}
 
+div.ms-selectable,
+div.ms-selection{
+  border-radius: 5px;
+}
 
 p.block-class-time{
   margin-top: -10px;
