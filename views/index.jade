@@ -4,12 +4,12 @@ block content
     form(id="formID" name="queryClasses", method="post", action='/', class="test")
         div(class="left-half")
             div(class="days")
-                h4(class="days-title") Select the days you are available
+                h4(class="days-title") 1) Select the days you are available for class
                 each day in ['M','T','W','R','F']
                     label(class="day")= day
                     input(class="check" type="checkbox", name="days",  value=day)
             div(class="times")
-                h4(class="days-title") Select the earliest and latest time you are available
+                h4(class="days-title") 2) Select the earliest and latest time you are available
                 div(class="time") Start Time
                     select(name="startHours")
                         for hour in ['01','02','03','04','05','06','07','08','09','10','11','12']
@@ -32,7 +32,7 @@ block content
                             option(value=post)= post
 
         div(class="right-half")
-            h4(class="select days-title") Select multiple departments to filter available classes
+            h4(class="select days-title") 3) Select multiple departments to filter available classes
             div(class="multi")
                 select(multiple="multiple" id="multi-select" name="departments")
                     for department in departments
