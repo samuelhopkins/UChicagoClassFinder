@@ -13,7 +13,10 @@ block content
                 div(class="time") Start Time
                     select(name="startHours")
                         for hour in ['01','02','03','04','05','06','07','08','09','10','11','12']
-                            option(value=hour)= hour
+                            if hour == '09'
+                                option(value=hour selected=true)= hour
+                            else
+                                option(value=hour)= hour
                     select(name="startMinutes")
                         for minute in minutes
                             option(value=minute)= minute
@@ -23,7 +26,10 @@ block content
                 div(class="endTime time") End Time  
                     select(name="endHours")
                         for hour in ['01','02','03','04','05','06','07','08','09','10','11','12']
-                            option(value=hour)= hour
+                            if hour == '04'
+                                option(value=hour selected=true)= hour
+                            else
+                                option(value=hour)= hour
                     select(name="endMinutes")
                         for minute in minutes
                             option(value=minute)= minute
