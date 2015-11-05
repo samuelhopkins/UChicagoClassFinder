@@ -140,7 +140,7 @@ function checkScheduleSpace(start24,end24,days){
     $.each(Schedule[val], function(i,v){
       var start = v[0];
       var end = v[1];
-      if ((start24 >= start) && (start24 <= end)){
+      if (((start24 >= start) && (start24 <= end)) || ((end24 >= start) && (end24 <= end))){
         bool = false;
       }
     });
