@@ -36,6 +36,12 @@ app.use(function(req, res, next) {
 
 var environ = app.get('env');
 var connection;
+console.log(environ)
+console.log(environ)
+
+console.log(environ)
+
+console.log(environ)
 
 function get_connection (){
 switch (app.get('env')) {
@@ -50,9 +56,11 @@ switch (app.get('env')) {
   break;
   case 'stage':
   connection = mysql.createConnection({
-      host     : 'betsinstance.cj7krdazj5je.us-west-2.rds.amazonaws.com:3306',
-      user     : 'sahopkins'
-    });
+    host     : process.env.RDS_HOST,
+    user     : process.env.RDS_USERNAME,
+    password : process.env.RDS_PASSWORD,
+    port     : process.env.RDS_PORT
+  });
   break;
   case 'production':
    connection = mysql.createConnection(process.env.DATABASE_URL);
