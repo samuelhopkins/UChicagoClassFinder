@@ -50,10 +50,8 @@ switch (app.get('env')) {
   break;
   case 'stage':
   connection = mysql.createConnection({
-      host     : 'promodb-stage.cygnvapjclbd.us-west-2.rds.amazonaws.com',
-      user     : 'stagedb',
-      password : 'timDB$!34',
-      database : 'promodb'
+      host     : 'betsinstance.cj7krdazj5je.us-west-2.rds.amazonaws.com:3306',
+      user     : 'sahopkins'
     });
   break;
   case 'production':
