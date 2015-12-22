@@ -191,12 +191,18 @@ function get24(hours, minutes, post){
 
 }
 
-var $form = $( "form" ).get(0);
-$form.addEventListener('change', function(change){
+$('.check').change(function(change){
+   console.log("Changed");
    doQuery();
-}, false);
+});
 
-
+$('select').each(function(index, val){
+  console.log(val);
+  $('select[name='+val.name+']').change(function(change){
+    console.log("changed");
+    doQuery();
+  });
+});
 
 $('#multi-select').multiSelect({
   afterSelect: function(values){
@@ -206,4 +212,5 @@ $('#multi-select').multiSelect({
      doQuery();
   }
 });
+
 });

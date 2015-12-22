@@ -1,6 +1,6 @@
 body {
    padding: 50px;
-  background-color: #880E09;
+  background-color: #BCC1C2;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 h1,h2,h3,h4,h5{
@@ -39,9 +39,6 @@ label{
 }
 
 
-#formID{
-  background-color: rgba(0,0,0,0);
-}
 
 div.endTime{
   padding-left: 3px;
@@ -74,20 +71,22 @@ div.multi{
   text-align: left;
 }
 h4.days-title{
-  color: #FBEBEF;
+  color: #4B4646;
 }
 
 label{
-  color:#CCC8D4;
+  color:#000000;
   margin-right: 5px;
 }
 
 div.time{
-  color:#CCC8D4;
+  color:#080809;
   font-size: 1.3em;
 }
 div.results{
-  margin-top: 30px;
+  max-height: 250px;
+  overflow: scroll;
+  margin-top: 20px;
   width: 72%;
   float:left;
   margin-left: 15%;
@@ -135,18 +134,17 @@ div.focus{
   height: 150vh;
 }
 
+
 button#show-schedule{
-  border-radius: 5px;
   font-size: 1.3em;
-  background-color:  #5E0302;
+  background-color:  #8D9DA4;
   color:white;
-  position:fixed;
-  top:300px;
-  left: 30px;
+  margin-left: 8%;
+  margin-top: -20px;
 }
 
 button#show-schedule:hover{
-  background-color: #E50502;
+  background-color: #319DE5;
 }
 
 
@@ -269,4 +267,8 @@ span.add{
 
 span.add:hover{
   text-decoration: underline;
+}
+
+.steps{
+  margin-bottom: -30px;
 }

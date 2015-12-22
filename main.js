@@ -73,6 +73,7 @@ switch (app.get('env')) {
 get_connection();
 connection.connect(function(err){
   if (!err){
+    console.log('populating');
     app.get('populate')();
   }
 });
